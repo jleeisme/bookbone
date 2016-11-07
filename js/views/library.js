@@ -2,13 +2,16 @@ var app = app || {};
 
 app.LibraryView = Backbone.View.extend({
   el: '#books',
-  events:{'click #add':'addBook'},
+  events:{'click #add':'addBook'}, //when the #add button is clicked
 
+  // preventDefault prevents the page reloading on updates
   addBook: function(e) {
     e.preventDefault();
 
-    var formData = {};
+    var formData = {};//form data for the book model can be stored in this object
 
+    // iterates over all input elements. If there's no input value, the formData gets the element's inputed value
+    // otherwise the default inputs will be used
     $('#addBook div').children('input').each(function(i, el) {
       if($(el).val() !== '') {
         formData[el.id] = $(el).val();
@@ -20,7 +23,7 @@ app.LibraryView = Backbone.View.extend({
   initialize: function(initialBooks) {
     this.collection = new app.Library(initialBooks);
     this.render();
-    this.listenTo(this.collection, 'add', this.renderBook);
+    this.listenTo(this.collection, 'add', this.renderBook);//to make the view render again when there's a new model
   },
 
   // render each book in its collection
